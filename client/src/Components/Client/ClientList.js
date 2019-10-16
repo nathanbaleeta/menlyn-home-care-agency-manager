@@ -361,7 +361,7 @@ class ClientList extends Component {
                 >
                   Bio-data
                 </Typography>
-                <br />
+
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField

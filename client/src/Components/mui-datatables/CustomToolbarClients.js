@@ -59,13 +59,13 @@ class CustomToolbar extends React.Component {
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "#2E3B55"
+              backgroundColor: "teal"
             }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Add Client
