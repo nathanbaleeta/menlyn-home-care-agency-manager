@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
+import MenuItem from "@material-ui/core/MenuItem";
+
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
@@ -21,6 +23,9 @@ import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarClients";
 
 import firebase from "../Common/firebase";
+import { titles } from "../Common/titleList";
+import { genders } from "../Common/genderList";
+import { maritalStatuses } from "../Common/maritalStatusList";
 
 const styles = theme => ({
   // Overiding css properties on material ui textbox
@@ -40,9 +45,12 @@ class ClientList extends Component {
       key: "",
       firstName: "",
       lastName: "",
+      title: "",
+      gender: "",
+      maritalStatus: "",
+      address: "",
       phone1: "",
-      phone2: "",
-      address: ""
+      phone2: ""
     };
   }
 
@@ -65,6 +73,9 @@ class ClientList extends Component {
           id: item,
           firstName: items[item].firstName,
           lastName: items[item].lastName,
+          title: items[item].title,
+          gender: items[item].gender,
+          maritalStatus: items[item].maritalStatus,
           phone1: items[item].phone1,
           phone2: items[item].phone2,
           address: items[item].address
@@ -108,6 +119,9 @@ class ClientList extends Component {
         key: snapshot.key,
         firstName: snapshot.child("firstName").val(),
         lastName: snapshot.child("lastName").val(),
+        title: snapshot.child("title").val(),
+        gender: snapshot.child("gender").val(),
+        maritalStatus: snapshot.child("maritalStatus").val(),
         phone1: snapshot.child("phone1").val(),
         phone2: snapshot.child("phone2").val(),
         address: snapshot.child("address").val()
@@ -125,6 +139,9 @@ class ClientList extends Component {
     const client = {
       firstName: this.toTitleCase(this.state.firstName),
       lastName: this.toTitleCase(this.state.lastName),
+      title: this.state.title,
+      gender: this.state.gender,
+      maritalStatus: this.state.maritalStatus,
       phone1: this.state.phone1,
       phone2: this.state.phone2,
       address: this.toTitleCase(this.state.address)
@@ -155,7 +172,27 @@ class ClientList extends Component {
           sort: true
         }
       },
-
+      {
+        name: "Title",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Gender",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Marital Status",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
       {
         name: "Address",
         options: {
@@ -240,6 +277,27 @@ class ClientList extends Component {
                   fontSize: 18
                 }}
               >
+                {c.title}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {c.gender}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {c.maritalStatus}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
                 {c.address}
               </div>,
               <div
@@ -315,7 +373,7 @@ class ClientList extends Component {
                       label="First name"
                       fullWidth
                       margin="normal"
-                      variant="outlined"
+                      //variant="outlined"
                       autoComplete="off"
                       InputProps={{
                         classes: {
@@ -334,7 +392,7 @@ class ClientList extends Component {
                       label="Last name"
                       fullWidth
                       margin="normal"
-                      variant="outlined"
+                      //variant="outlined"
                       autoComplete="off"
                       InputProps={{
                         classes: {
@@ -342,6 +400,69 @@ class ClientList extends Component {
                         }
                       }}
                     />
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <TextField
+                      id="title"
+                      select
+                      name="title"
+                      value={this.state.title}
+                      onChange={this.onChange}
+                      label="Title*"
+                      fullWidth
+                      helperText="Please select title"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                    >
+                      {titles.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <TextField
+                      id="gender"
+                      select
+                      name="gender"
+                      value={this.state.gender}
+                      onChange={this.onChange}
+                      label="Gender*"
+                      fullWidth
+                      helperText="Please select gender"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                    >
+                      {genders.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      id="maritalStatus"
+                      select
+                      name="maritalStatus"
+                      value={this.state.maritalStatus}
+                      onChange={this.onChange}
+                      label="Marital Status*"
+                      fullWidth
+                      helperText="Please select marital status"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                    >
+                      {maritalStatuses.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <TextField
@@ -354,7 +475,7 @@ class ClientList extends Component {
                       rowsMax="4"
                       fullWidth
                       margin="normal"
-                      variant="outlined"
+                      //variant="outlined"
                       autoComplete="off"
                       InputProps={{
                         classes: {
@@ -363,7 +484,7 @@ class ClientList extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={6} sm={6}>
                     <InputMask
                       mask="(+256) 999 999 999"
                       value={this.state.phone1}
@@ -376,7 +497,7 @@ class ClientList extends Component {
                           label="Phone 1"
                           fullWidth
                           margin="normal"
-                          variant="outlined"
+                          //variant="outlined"
                           autoComplete="phone1"
                           InputProps={{
                             classes: {
@@ -387,7 +508,7 @@ class ClientList extends Component {
                       )}
                     </InputMask>
                   </Grid>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={6} sm={6}>
                     <InputMask
                       mask="(+256) 999 999 999"
                       value={this.state.phone2}
@@ -400,7 +521,7 @@ class ClientList extends Component {
                           label="Phone 2"
                           fullWidth
                           margin="normal"
-                          variant="outlined"
+                          //variant="outlined"
                           autoComplete="off"
                           InputProps={{
                             classes: {
