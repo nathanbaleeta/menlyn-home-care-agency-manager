@@ -247,12 +247,6 @@ class ClientList extends Component {
           .ref("clients")
           .child(id)
           .remove();
-
-        firebase
-          .database()
-          .ref("loans")
-          .child(id)
-          .remove();
       }
     };
 
@@ -263,7 +257,7 @@ class ClientList extends Component {
           data={data.map(c => {
             return [
               <Link
-                to={`/clients/${c.id}`}
+                //to={`/clients/${c.id}`}
                 style={{
                   color: "darkblue",
                   textDecoration: "none",

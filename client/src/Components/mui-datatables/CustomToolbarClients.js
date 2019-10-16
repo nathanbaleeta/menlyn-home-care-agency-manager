@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import AddIcon from "@material-ui/icons/Add";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
@@ -45,7 +45,7 @@ class CustomToolbar extends React.Component {
       <React.Fragment>
         <Tooltip title={"Add Loan"}>
           <IconButton className={classes.iconButton} onClick={this.handleOpen}>
-            <AddIcon color="default" className={classes.addIcon} />
+            <PersonAddIcon color="primary" className={classes.addIcon} />
           </IconButton>
         </Tooltip>
 
