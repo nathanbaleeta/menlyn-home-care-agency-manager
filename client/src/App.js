@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Header from "./Components/Layout/Header";
 import Dashboard from "./Components/Analytics/Dashboard";
 import ClientList from "./Components/Client/ClientList";
+import HouseMaidList from "./Components/HouseMaids/HouseMaidList";
 
 const styles = theme => ({
   main: {
@@ -27,6 +28,7 @@ const App = ({ classes }) => (
       <Switch>
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/clients" component={ClientList} />
+        <Route exact path="/house-maids" component={HouseMaidList} />
       </Switch>
     </main>
   </React.Fragment>

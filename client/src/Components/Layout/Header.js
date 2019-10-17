@@ -169,6 +169,15 @@ class Header extends React.Component {
             <p>Clients</p>
           </MenuItem>
         </Link>
+
+        <Link to="/house-maids" className={classes.linkMobile}>
+          <MenuItem>
+            <IconButton color="inherit">
+              <GroupIcon />
+            </IconButton>
+            <p>House Maids</p>
+          </MenuItem>
+        </Link>
       </Menu>
     );
 
