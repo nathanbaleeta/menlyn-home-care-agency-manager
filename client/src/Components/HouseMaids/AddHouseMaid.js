@@ -214,7 +214,7 @@ class AddHouseMaid extends Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <InputMask
-                mask="(+256) 999 999 999"
+                mask="256999999999"
                 value={phone1}
                 onChange={this.onChange}
               >
@@ -238,7 +238,7 @@ class AddHouseMaid extends Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <InputMask
-                mask="(+256) 999 999 999"
+                mask="256999999999"
                 value={phone2}
                 onChange={this.onChange}
               >

@@ -399,7 +399,7 @@ class HouseMaidList extends Component {
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={6} sm={6}>
                     <TextField
                       id="maritalStatus"
                       select
@@ -442,7 +442,7 @@ class HouseMaidList extends Component {
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <InputMask
-                      mask="(+256) 999 999 999"
+                      mask="256999999999"
                       value={this.state.phone1}
                       onChange={this.onChange}
                     >
@@ -466,7 +466,7 @@ class HouseMaidList extends Component {
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <InputMask
-                      mask="(+256) 999 999 999"
+                      mask="256999999999"
                       value={this.state.phone2}
                       onChange={this.onChange}
                     >
