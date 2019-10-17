@@ -6,7 +6,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,7 +13,6 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import PollIcon from "@material-ui/icons/Poll";
 import GroupIcon from "@material-ui/icons/Group";
 
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
@@ -35,6 +33,10 @@ const styles = theme => ({
   link: {
     textDecoration: "none",
     color: "white"
+  },
+  linkMobile: {
+    textDecoration: "none",
+    color: "black"
   },
   avatar: {
     height: 55,
@@ -150,29 +152,23 @@ class Header extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <GroupIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
+        <Link to="/" className={classes.linkMobile}>
+          <MenuItem>
+            <IconButton color="inherit">
+              <PollIcon />
+            </IconButton>
+            <p>Analytics</p>
+          </MenuItem>
+        </Link>
 
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
+        <Link to="/clients" className={classes.linkMobile}>
+          <MenuItem>
+            <IconButton color="inherit">
+              <GroupIcon />
+            </IconButton>
+            <p>Clients</p>
+          </MenuItem>
+        </Link>
       </Menu>
     );
 
