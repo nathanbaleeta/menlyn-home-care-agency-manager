@@ -43,6 +43,7 @@ const styles = theme => ({
     width: 55
   },
   title: {
+    paddingLeft: "10px",
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block"

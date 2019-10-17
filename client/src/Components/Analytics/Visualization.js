@@ -7,7 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import ClientSummary from "./ClientSummary";
+import HouseMaidSummary from "./HouseMaidSummary";
 import ClientReport from "./ClientReport";
+import HouseMaidReport from "./HouseMaidReport";
 
 const styles = theme => ({
   root: {
@@ -45,13 +47,13 @@ class Visualization extends React.Component {
             <ClientSummary />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <ClientSummary />
+            <HouseMaidSummary />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <ClientSummary />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <ClientSummary />
+            <HouseMaidSummary />
           </Grid>
         </Grid>
         <br /> <br /> <br />
@@ -64,9 +66,12 @@ class Visualization extends React.Component {
           Summary Reports
         </Typography>
         <br />
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <ClientReport />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <HouseMaidReport />
           </Grid>
         </Grid>
       </div>
