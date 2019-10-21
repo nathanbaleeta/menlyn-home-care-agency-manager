@@ -23,8 +23,7 @@ import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarMaid";
 
 import firebase from "../Common/firebase";
-import { genders } from "../Common/genderList";
-import { maritalStatuses } from "../Common/maritalStatusList";
+import { districts } from "../Common/districtList";
 
 const styles = theme => ({
   // Overiding css properties on material ui textbox
@@ -580,27 +579,30 @@ class HouseMaidList extends Component {
                     </Typography>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={12}>
                     <TextField
                       required
                       id="homeDistrict"
+                      select
                       name="homeDistrict"
                       value={this.state.homeDistrict}
                       onChange={this.onChange}
-                      label="Home District"
+                      label="Home District*"
                       fullWidth
-                      margin="normal"
-                      //variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
+                      //helperText="Please select home district"
+                      InputLabelProps={{
+                        shrink: true
                       }}
-                    />
+                    >
+                      {districts.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={12}>
                     <TextField
                       required
                       id="village"
@@ -642,7 +644,7 @@ class HouseMaidList extends Component {
                   <Grid item xs={12} sm={6}>
                     <InputMask
                       mask="256999999999"
-                      value={this.state.toLowerCaselc1Contact}
+                      value={this.state.lc1Contact}
                       onChange={this.onChange}
                     >
                       {() => (

@@ -9,8 +9,7 @@ import InputMask from "react-input-mask";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import firebase from "../Common/firebase";
-import { genders } from "../Common/genderList";
-import { maritalStatuses } from "../Common/maritalStatusList";
+import { districts } from "../Common/districtList";
 
 //import NumberFormat from "react-number-format";
 
@@ -288,27 +287,30 @@ class AddHouseMaid extends Component {
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 required
                 id="homeDistrict"
+                select
                 name="homeDistrict"
-                value={homeDistrict}
+                value={this.state.homeDistrict}
                 onChange={this.onChange}
-                label="Home District"
+                label="Home District*"
                 fullWidth
-                margin="normal"
-                //variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
+                //helperText="Please select home district"
+                InputLabelProps={{
+                  shrink: true
                 }}
-              />
+              >
+                {districts.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 required
                 id="village"
