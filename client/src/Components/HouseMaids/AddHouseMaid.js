@@ -72,8 +72,8 @@ class AddHouseMaid extends Component {
       guardianName: this.toTitleCase(this.state.guardianName),
       guardianContact: this.state.guardianContact,
       homeDistrict: this.state.homeDistrict,
-      village: this.state.village,
-      lc1Name: this.state.lc1Name,
+      village: this.toTitleCase(this.state.village),
+      lc1Name: this.toTitleCase(this.state.lc1Name),
       lc1Contact: this.state.lc1Contact,
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
@@ -347,25 +347,29 @@ class AddHouseMaid extends Component {
                 }}
               />
             </Grid>
-
             <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="lc1Contact"
-                name="lc1Contact"
+              <InputMask
+                mask="256999999999"
                 value={lc1Contact}
                 onChange={this.onChange}
-                label="LC 1 Contact"
-                fullWidth
-                margin="normal"
-                //variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
+              >
+                {() => (
+                  <TextField
+                    id="lc1Contact"
+                    name="lc1Contact"
+                    label="LC 1 Contact"
+                    fullWidth
+                    margin="normal"
+                    //variant="outlined"
+                    autoComplete="lc1Contact"
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline
+                      }
+                    }}
+                  />
+                )}
+              </InputMask>
             </Grid>
 
             <Grid item xs={12} sm={12}>

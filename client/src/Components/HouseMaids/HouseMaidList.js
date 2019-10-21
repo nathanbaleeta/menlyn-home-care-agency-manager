@@ -44,11 +44,15 @@ class HouseMaidList extends Component {
       key: "",
       firstName: "",
       lastName: "",
-      gender: "",
-      maritalStatus: "",
-      location: "",
-      phone1: "",
-      phone2: ""
+      registrationNo: "",
+      nin: "",
+      maidContact: "",
+      guardianName: "",
+      guardianContact: "",
+      homeDistrict: "",
+      village: "",
+      lc1Name: "",
+      lc1Contact: ""
     };
   }
 
@@ -71,11 +75,15 @@ class HouseMaidList extends Component {
           id: item,
           firstName: items[item].firstName,
           lastName: items[item].lastName,
-          gender: items[item].gender,
-          maritalStatus: items[item].maritalStatus,
-          phone1: items[item].phone1,
-          phone2: items[item].phone2,
-          location: items[item].location
+          registrationNo: items[item].registrationNo,
+          nin: items[item].nin,
+          maidContact: items[item].maidContact,
+          guardianName: items[item].guardianName,
+          guardianContact: items[item].guardianContact,
+          homeDistrict: items[item].homeDistrict,
+          village: items[item].village,
+          lc1Name: items[item].lc1Name,
+          lc1Contact: items[item].lc1Contact
         });
       }
 
@@ -116,11 +124,15 @@ class HouseMaidList extends Component {
         key: snapshot.key,
         firstName: snapshot.child("firstName").val(),
         lastName: snapshot.child("lastName").val(),
-        gender: snapshot.child("gender").val(),
-        maritalStatus: snapshot.child("maritalStatus").val(),
-        phone1: snapshot.child("phone1").val(),
-        phone2: snapshot.child("phone2").val(),
-        location: snapshot.child("location").val()
+        registrationNo: snapshot.child("registrationNo").val(),
+        nin: snapshot.child("nin").val(),
+        maidContact: snapshot.child("maidContact").val(),
+        guardianName: snapshot.child("guardianName").val(),
+        guardianContact: snapshot.child("guardianContact").val(),
+        homeDistrict: snapshot.child("homeDistrict").val(),
+        village: snapshot.child("village").val(),
+        lc1Name: snapshot.child("lc1Name").val(),
+        lc1Contact: snapshot.child("lc1Contact").val()
       });
     });
     console.log(
@@ -135,11 +147,15 @@ class HouseMaidList extends Component {
     const maid = {
       firstName: this.toTitleCase(this.state.firstName),
       lastName: this.toTitleCase(this.state.lastName),
-      gender: this.state.gender,
-      maritalStatus: this.state.maritalStatus,
-      phone1: this.state.phone1,
-      phone2: this.state.phone2,
-      location: this.toTitleCase(this.state.location)
+      registrationNo: this.state.registrationNo,
+      nin: this.state.nin,
+      maidContact: this.state.maidContact,
+      guardianName: this.toTitleCase(this.state.guardianName),
+      guardianContact: this.state.guardianContact,
+      homeDistrict: this.state.homeDistrict,
+      village: this.toTitleCase(this.state.village),
+      lc1Name: this.toTitleCase(this.state.lc1Name),
+      lc1Contact: this.state.lc1Contact
     };
 
     //Update farmer module
@@ -168,35 +184,63 @@ class HouseMaidList extends Component {
         }
       },
       {
-        name: "Gender",
+        name: "Registration No",
         options: {
           filter: false,
           sort: false
         }
       },
       {
-        name: "Marital Status",
+        name: "National ID Number",
         options: {
           filter: false,
           sort: false
         }
       },
       {
-        name: "Locatioin",
+        name: "Maid Contact",
         options: {
           filter: false,
           sort: false
         }
       },
       {
-        name: "Phone 1",
+        name: "Guardian Name",
         options: {
           filter: false,
           sort: false
         }
       },
       {
-        name: "Phone 2",
+        name: "Guardian Contact",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Home district",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Village",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "LC 1 Name",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "LC 1 Contact",
         options: {
           filter: false,
           sort: false
@@ -260,35 +304,63 @@ class HouseMaidList extends Component {
                   fontSize: 18
                 }}
               >
-                {c.gender}
+                {c.registrationNo}
               </div>,
               <div
                 style={{
                   fontSize: 18
                 }}
               >
-                {c.maritalStatus}
+                {c.nin}
               </div>,
               <div
                 style={{
                   fontSize: 18
                 }}
               >
-                {c.location}
+                {c.maidContact}
               </div>,
               <div
                 style={{
                   fontSize: 18
                 }}
               >
-                {c.phone1}
+                {c.guardianName}
               </div>,
               <div
                 style={{
                   fontSize: 18
                 }}
               >
-                {c.phone2}
+                {c.guardianContact}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {c.homeDistrict}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {c.village}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {c.lc1Name}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {c.lc1Contact}
               </div>,
 
               <IconButton
@@ -378,57 +450,14 @@ class HouseMaidList extends Component {
                     />
                   </Grid>
 
-                  <Grid item xs={6} sm={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
-                      id="gender"
-                      select
-                      name="gender"
-                      value={this.state.gender}
+                      required
+                      id="registrationNo"
+                      name="registrationNo"
+                      value={this.state.registrationNo}
                       onChange={this.onChange}
-                      label="Gender*"
-                      fullWidth
-                      helperText="Please select gender"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    >
-                      {genders.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      id="maritalStatus"
-                      select
-                      name="maritalStatus"
-                      value={this.state.maritalStatus}
-                      onChange={this.onChange}
-                      label="Marital Status*"
-                      fullWidth
-                      helperText="Please select marital status"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    >
-                      {maritalStatuses.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      id="location"
-                      name="location"
-                      value={this.state.location}
-                      onChange={this.onChange}
-                      label="Location"
-                      multiline
-                      rowsMax="4"
+                      label="Registration Number"
                       fullWidth
                       margin="normal"
                       //variant="outlined"
@@ -440,21 +469,42 @@ class HouseMaidList extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={6} sm={6}>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="nin"
+                      name="nin"
+                      value={this.state.nin}
+                      onChange={this.onChange}
+                      label="National ID Number"
+                      fullWidth
+                      margin="normal"
+                      //variant="outlined"
+                      autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={12}>
                     <InputMask
                       mask="256999999999"
-                      value={this.state.phone1}
+                      value={this.state.maidContact}
                       onChange={this.onChange}
                     >
                       {() => (
                         <TextField
-                          id="phone1"
-                          name="phone1"
-                          label="Phone 1"
+                          id="maidContact"
+                          name="maidContact"
+                          label="Maid Contact"
                           fullWidth
                           margin="normal"
                           //variant="outlined"
-                          autoComplete="phone1"
+                          autoComplete="maidContact"
                           InputProps={{
                             classes: {
                               notchedOutline: classes.notchedOutline
@@ -464,21 +514,146 @@ class HouseMaidList extends Component {
                       )}
                     </InputMask>
                   </Grid>
-                  <Grid item xs={6} sm={6}>
+
+                  <Grid item xs={12} sm={12}>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{ color: "black" }}
+                    >
+                      Guardian Information
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="guardianName"
+                      name="guardianName"
+                      value={this.state.guardianName}
+                      onChange={this.onChange}
+                      label="Guardian name"
+                      fullWidth
+                      margin="normal"
+                      //variant="outlined"
+                      autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
                     <InputMask
                       mask="256999999999"
-                      value={this.state.phone2}
+                      value={this.state.guardianContact}
                       onChange={this.onChange}
                     >
                       {() => (
                         <TextField
-                          id="phone2"
-                          name="phone2"
-                          label="Phone 2"
+                          id="guardianContact"
+                          name="guardianContact"
+                          label="Guardian Contact"
                           fullWidth
                           margin="normal"
                           //variant="outlined"
-                          autoComplete="off"
+                          autoComplete="guardianContact"
+                          InputProps={{
+                            classes: {
+                              notchedOutline: classes.notchedOutline
+                            }
+                          }}
+                        />
+                      )}
+                    </InputMask>
+                  </Grid>
+
+                  <Grid item xs={12} sm={12}>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{ color: "black" }}
+                    >
+                      Location Information
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="homeDistrict"
+                      name="homeDistrict"
+                      value={this.state.homeDistrict}
+                      onChange={this.onChange}
+                      label="Home District"
+                      fullWidth
+                      margin="normal"
+                      //variant="outlined"
+                      autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="village"
+                      name="village"
+                      value={this.state.village}
+                      onChange={this.onChange}
+                      label="Village"
+                      fullWidth
+                      margin="normal"
+                      //variant="outlined"
+                      autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="lc1Name"
+                      name="lc1Name"
+                      value={this.state.lc1Name}
+                      onChange={this.onChange}
+                      label="LC 1 Name"
+                      fullWidth
+                      margin="normal"
+                      //variant="outlined"
+                      autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <InputMask
+                      mask="256999999999"
+                      value={this.state.toLowerCaselc1Contact}
+                      onChange={this.onChange}
+                    >
+                      {() => (
+                        <TextField
+                          id="lc1Contact"
+                          name="lc1Contact"
+                          label="LC 1 Contact"
+                          fullWidth
+                          margin="normal"
+                          //variant="outlined"
+                          autoComplete="lc1Contact"
                           InputProps={{
                             classes: {
                               notchedOutline: classes.notchedOutline
