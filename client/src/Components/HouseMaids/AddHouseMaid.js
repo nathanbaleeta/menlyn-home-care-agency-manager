@@ -293,7 +293,7 @@ class AddHouseMaid extends Component {
                 id="homeDistrict"
                 select
                 name="homeDistrict"
-                value={this.state.homeDistrict}
+                value={homeDistrict}
                 onChange={this.onChange}
                 label="Home District*"
                 fullWidth

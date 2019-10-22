@@ -394,7 +394,7 @@ class HouseMaidList extends Component {
               gutterBottom
               style={{ color: "white" }}
             >
-              Edit Maid
+              Edit House Maid
             </Typography>
           </DialogTitle>
           <DialogContent>
