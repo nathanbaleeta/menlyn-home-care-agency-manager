@@ -4,16 +4,11 @@ import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import InputMask from "react-input-mask";
-
 import MenuItem from "@material-ui/core/MenuItem";
+import InputMask from "react-input-mask";
 
 import firebase from "../Common/firebase";
 import { districts } from "../Common/districtList";
-
-//import NumberFormat from "react-number-format";
-
-//var NumberFormat = require('react-number-format');
 
 const styles = theme => ({
   // Overiding css properties on material ui textbox
@@ -27,6 +22,7 @@ class AddHouseMaid extends Component {
   constructor() {
     super();
     this.state = {
+      passport_photo: "",
       firstName: "",
       lastName: "",
       registrationNo: "",
@@ -37,7 +33,10 @@ class AddHouseMaid extends Component {
       homeDistrict: "",
       village: "",
       lc1Name: "",
-      lc1Contact: ""
+      lc1Contact: "",
+      image: null,
+      url: "",
+      progress: 0
     };
   }
 
@@ -49,6 +48,39 @@ class AddHouseMaid extends Component {
         */
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  handleChange = e => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({ image }));
+    }
+  };
+
+  handleImageChange(e) {
+    e.preventDefault();
+
+    // Preview passport phot uploaded by adding it to state object
+    this.setState({
+      passport_photo: URL.createObjectURL(e.target.files[0])
+    });
+
+    // create a random id
+    const randomId = Math.random()
+      .toString(36)
+      .substring(2);
+
+    firebase
+      .storage()
+      .ref(`/passport-photos/${randomId}`)
+      .put(e.target.files[0])
+      .then(result => {
+        console.log();
+        this.setState({
+          url: result.metadata.fullPath
+        });
+        console.log(result.metadata.fullPath);
+      });
+  }
 
   toTitleCase = phrase => {
     return phrase
@@ -121,6 +153,20 @@ class AddHouseMaid extends Component {
       <Fragment>
         <br />
         <form onSubmit={this.handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={8} sm={8} />
+            <Grid item xs={4} sm={4}>
+              <img
+                src={
+                  this.state.passport_photo ||
+                  "https://via.placeholder.com/400x300"
+                }
+                alt="Uploaded Images"
+                height="150"
+                width="150"
+              />
+            </Grid>
+          </Grid>
           <Typography variant="h5" gutterBottom style={{ color: "black" }}>
             Bio-data
           </Typography>
@@ -136,13 +182,7 @@ class AddHouseMaid extends Component {
                 label="First name"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -155,13 +195,7 @@ class AddHouseMaid extends Component {
                 label="Last name"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
 
@@ -175,13 +209,7 @@ class AddHouseMaid extends Component {
                 label="Registration Number"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
 
@@ -195,13 +223,7 @@ class AddHouseMaid extends Component {
                 label="National ID Number"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
 
@@ -218,16 +240,38 @@ class AddHouseMaid extends Component {
                     label="Maid Contact"
                     fullWidth
                     margin="normal"
-                    //variant="outlined"
                     autoComplete="maidContact"
-                    InputProps={{
-                      classes: {
-                        notchedOutline: classes.notchedOutline
-                      }
-                    }}
                   />
                 )}
               </InputMask>
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <Typography variant="h5" gutterBottom style={{ color: "black" }}>
+                Passport Photo data
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <TextField
+                id="passport-photo"
+                label="Passport Photo"
+                type="file"
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                fullWidth
+                name="passport_photo"
+                onChange={e => this.handleImageChange(e)}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
+              />
             </Grid>
 
             <Grid item xs={12} sm={12}>
@@ -246,13 +290,7 @@ class AddHouseMaid extends Component {
                 label="Guardian name"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
 
@@ -269,13 +307,7 @@ class AddHouseMaid extends Component {
                     label="Guardian Contact"
                     fullWidth
                     margin="normal"
-                    //variant="outlined"
                     autoComplete="guardianContact"
-                    InputProps={{
-                      classes: {
-                        notchedOutline: classes.notchedOutline
-                      }
-                    }}
                   />
                 )}
               </InputMask>
@@ -320,13 +352,7 @@ class AddHouseMaid extends Component {
                 label="Village"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
 
@@ -340,13 +366,7 @@ class AddHouseMaid extends Component {
                 label="LC 1 Name"
                 fullWidth
                 margin="normal"
-                //variant="outlined"
                 autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -362,13 +382,7 @@ class AddHouseMaid extends Component {
                     label="LC 1 Contact"
                     fullWidth
                     margin="normal"
-                    //variant="outlined"
                     autoComplete="lc1Contact"
-                    InputProps={{
-                      classes: {
-                        notchedOutline: classes.notchedOutline
-                      }
-                    }}
                   />
                 )}
               </InputMask>
