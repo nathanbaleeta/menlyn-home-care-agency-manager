@@ -49,13 +49,6 @@ class AddHouseMaid extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleChange = e => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({ image }));
-    }
-  };
-
   handleImageChange(e) {
     e.preventDefault();
 
@@ -69,6 +62,7 @@ class AddHouseMaid extends Component {
       .toString(36)
       .substring(2);
 
+    // Upload passport photo to firebase
     firebase
       .storage()
       .ref(`/passport-photos/${randomId}`)
@@ -106,6 +100,7 @@ class AddHouseMaid extends Component {
       village: this.toTitleCase(this.state.village),
       lc1Name: this.toTitleCase(this.state.lc1Name),
       lc1Contact: this.state.lc1Contact,
+      url: this.state.url,
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })
@@ -158,12 +153,11 @@ class AddHouseMaid extends Component {
             <Grid item xs={4} sm={4}>
               <img
                 src={
-                  this.state.passport_photo ||
-                  "https://via.placeholder.com/400x300"
+                  this.state.passport_photo || "static/images/passportPhoto.png"
                 }
                 alt="Uploaded Images"
-                height="150"
-                width="150"
+                height="120"
+                width="120"
               />
             </Grid>
           </Grid>
