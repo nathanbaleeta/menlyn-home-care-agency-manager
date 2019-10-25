@@ -114,6 +114,7 @@ class AddHouseMaid extends Component {
 
     //Clear the Client form inputs
     this.setState({
+      passport_photo: "",
       firstName: "",
       lastName: "",
       registrationNo: "",
@@ -124,13 +125,15 @@ class AddHouseMaid extends Component {
       homeDistrict: "",
       village: "",
       lc1Name: "",
-      lc1Contact: ""
+      lc1Contact: "",
+      url: ""
     });
   };
 
   render() {
     const { classes } = this.props;
     const {
+      passport_photo,
       firstName,
       lastName,
       registrationNo,
@@ -152,9 +155,7 @@ class AddHouseMaid extends Component {
             <Grid item xs={8} sm={8} />
             <Grid item xs={4} sm={4}>
               <img
-                src={
-                  this.state.passport_photo || "static/images/passportPhoto.png"
-                }
+                src={passport_photo || "static/images/passportPhoto.png"}
                 alt="Uploaded Images"
                 height="120"
                 width="120"

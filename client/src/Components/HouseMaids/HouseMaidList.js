@@ -41,6 +41,7 @@ class HouseMaidList extends Component {
       open: false,
 
       key: "",
+      passport_photo: "",
       firstName: "",
       lastName: "",
       registrationNo: "",
@@ -51,7 +52,8 @@ class HouseMaidList extends Component {
       homeDistrict: "",
       village: "",
       lc1Name: "",
-      lc1Contact: ""
+      lc1Contact: "",
+      url: ""
     };
   }
 
@@ -102,6 +104,33 @@ class HouseMaidList extends Component {
         */
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  handleImageChange(e) {
+    e.preventDefault();
+
+    // Preview passport phot uploaded by adding it to state object
+    this.setState({
+      passport_photo: URL.createObjectURL(e.target.files[0])
+    });
+
+    // create a random id
+    const randomId = Math.random()
+      .toString(36)
+      .substring(2);
+
+    // Upload passport photo to firebase
+    firebase
+      .storage()
+      .ref(`/passport-photos/${randomId}`)
+      .put(e.target.files[0])
+      .then(result => {
+        console.log();
+        this.setState({
+          url: result.metadata.fullPath
+        });
+        console.log(result.metadata.fullPath);
+      });
+  }
 
   toTitleCase = phrase => {
     return phrase
@@ -154,7 +183,8 @@ class HouseMaidList extends Component {
       homeDistrict: this.state.homeDistrict,
       village: this.toTitleCase(this.state.village),
       lc1Name: this.toTitleCase(this.state.lc1Name),
-      lc1Contact: this.state.lc1Contact
+      lc1Contact: this.state.lc1Contact,
+      url: this.state.url
     };
 
     //Update farmer module
@@ -175,6 +205,13 @@ class HouseMaidList extends Component {
     const { data } = this.state;
 
     const columns = [
+      {
+        name: "",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
       {
         name: "Maid name",
         options: {
@@ -287,6 +324,18 @@ class HouseMaidList extends Component {
           title={"House Maid list"}
           data={data.map(c => {
             return [
+              <div>
+                <img
+                  src={
+                    this.state.passport_photo ||
+                    "static/images/passportPhoto.png" ||
+                    c.url
+                  }
+                  alt="Uploaded Images"
+                  height="60"
+                  width="60"
+                />
+              </div>,
               <Link
                 //to={`/clients/${c.id}`}
                 style={{
@@ -401,6 +450,20 @@ class HouseMaidList extends Component {
             <DialogContentText id="alert-dialog-description" color="primary">
               <br />
               <form onSubmit={this.handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={8} sm={8} />
+                  <Grid item xs={4} sm={4}>
+                    <img
+                      src={
+                        this.state.passport_photo ||
+                        "static/images/passportPhoto.png"
+                      }
+                      alt="Uploaded Images"
+                      height="120"
+                      width="120"
+                    />
+                  </Grid>
+                </Grid>
                 <Typography
                   variant="h5"
                   gutterBottom
@@ -512,6 +575,38 @@ class HouseMaidList extends Component {
                         />
                       )}
                     </InputMask>
+                  </Grid>
+
+                  <Grid item xs={12} sm={12}>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{ color: "black" }}
+                    >
+                      Passport Photo data
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      id="passport-photo"
+                      label="Passport Photo"
+                      type="file"
+                      className={classes.textField}
+                      margin="normal"
+                      variant="outlined"
+                      fullWidth
+                      name="passport_photo"
+                      onChange={e => this.handleImageChange(e)}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
+                    />
                   </Grid>
 
                   <Grid item xs={12} sm={12}>
