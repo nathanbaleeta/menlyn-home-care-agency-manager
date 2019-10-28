@@ -19,26 +19,23 @@ const styles = theme => ({
 });
 
 class AddHouseMaid extends Component {
-  constructor() {
-    super();
-    this.state = {
-      passport_photo: "",
-      firstName: "",
-      lastName: "",
-      registrationNo: "",
-      nin: "",
-      maidContact: "",
-      guardianName: "",
-      guardianContact: "",
-      homeDistrict: "",
-      village: "",
-      lc1Name: "",
-      lc1Contact: "",
-      image: null,
-      url: "",
-      progress: 0
-    };
-  }
+  state = {
+    passport_photo: "",
+    firstName: "",
+    lastName: "",
+    registrationNo: "",
+    nin: "",
+    maidContact: "",
+    guardianName: "",
+    guardianContact: "",
+    homeDistrict: "",
+    village: "",
+    lc1Name: "",
+    lc1Contact: "",
+    image: null,
+    url: "",
+    progress: 0
+  };
 
   onChange = e => {
     /*
@@ -63,16 +60,18 @@ class AddHouseMaid extends Component {
       .substring(2);
 
     // Upload passport photo to firebase
-    firebase
+    const uploadTask = firebase
       .storage()
       .ref(`/passport-photos/${randomId}`)
-      .put(e.target.files[0])
-      .then(result => {
-        console.log();
-        this.setState({
-          url: result.metadata.fullPath
-        });
-        console.log(result.metadata.fullPath);
+      .put(e.target.files[0]);
+
+    uploadTask
+      .then(uploadTaskSnapshot => {
+        return uploadTaskSnapshot.ref.getDownloadURL();
+      })
+      .then(url => {
+        this.setState({ url: url });
+        console.log(this.state);
       });
   }
 

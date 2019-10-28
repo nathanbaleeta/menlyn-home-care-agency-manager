@@ -7,8 +7,6 @@ import Dashboard from "./Components/Analytics/Dashboard";
 import ClientList from "./Components/Client/ClientList";
 import HouseMaidList from "./Components/HouseMaids/HouseMaidList";
 
-import ImageUpload from "./Components/HouseMaids/ImageUpload";
-
 const styles = theme => ({
   main: {
     padding: 3 * theme.spacing.unit,
@@ -31,7 +29,6 @@ const App = ({ classes }) => (
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/clients" component={ClientList} />
         <Route exact path="/house-maids" component={HouseMaidList} />
-        <Route exact path="/upload" component={ImageUpload} />
       </Switch>
     </main>
   </React.Fragment>

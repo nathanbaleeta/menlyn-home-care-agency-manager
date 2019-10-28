@@ -71,7 +71,27 @@ class HouseMaidList extends Component {
     maidsRef.on("value", snapshot => {
       let items = snapshot.val();
       let newState = [];
+
+      const storageRef = firebase.storage();
+
       for (let item in items) {
+        const fetchPhoto = (item, url) => {
+          //Find index of specific object using findIndex method.
+          //const objIndex = newState.findIndex(obj => obj.id === item);
+          //console.log(objIndex);
+
+          const storageRef = firebase.storage();
+          storageRef
+            .ref(url)
+            .getDownloadURL()
+            .then(function(photoURL) {
+              Object.assign(...newState, { url: photoURL });
+            })
+            .catch(function(error) {
+              // Do something
+            });
+        };
+
         newState.push({
           id: item,
           firstName: items[item].firstName,
@@ -84,7 +104,8 @@ class HouseMaidList extends Component {
           homeDistrict: items[item].homeDistrict,
           village: items[item].village,
           lc1Name: items[item].lc1Name,
-          lc1Contact: items[item].lc1Contact
+          lc1Contact: items[item].lc1Contact,
+          url: items[item].url
         });
       }
 
@@ -92,7 +113,7 @@ class HouseMaidList extends Component {
       this.setState({
         data: newState
       });
-      //console.log(this.state.data);
+      console.log(this.state.data);
     });
   }
 
@@ -119,16 +140,18 @@ class HouseMaidList extends Component {
       .substring(2);
 
     // Upload passport photo to firebase
-    firebase
+    const uploadTask = firebase
       .storage()
       .ref(`/passport-photos/${randomId}`)
-      .put(e.target.files[0])
-      .then(result => {
-        console.log();
-        this.setState({
-          url: result.metadata.fullPath
-        });
-        console.log(result.metadata.fullPath);
+      .put(e.target.files[0]);
+
+    uploadTask
+      .then(uploadTaskSnapshot => {
+        return uploadTaskSnapshot.ref.getDownloadURL();
+      })
+      .then(url => {
+        this.setState({ url: url });
+        console.log(this.state);
       });
   }
 
@@ -160,7 +183,8 @@ class HouseMaidList extends Component {
         homeDistrict: snapshot.child("homeDistrict").val(),
         village: snapshot.child("village").val(),
         lc1Name: snapshot.child("lc1Name").val(),
-        lc1Contact: snapshot.child("lc1Contact").val()
+        lc1Contact: snapshot.child("lc1Contact").val(),
+        url: snapshot.child("url").val()
       });
     });
     console.log(
@@ -198,6 +222,23 @@ class HouseMaidList extends Component {
       .catch(function(error) {
         console.log("Synchronization failed");
       });
+
+    //Clear the Client form inputs
+    this.setState({
+      passport_photo: "",
+      firstName: "",
+      lastName: "",
+      registrationNo: "",
+      nin: "",
+      maidContact: "",
+      guardianName: "",
+      guardianContact: "",
+      homeDistrict: "",
+      village: "",
+      lc1Name: "",
+      lc1Contact: "",
+      url: ""
+    });
   };
 
   render() {
@@ -327,11 +368,12 @@ class HouseMaidList extends Component {
               <div>
                 <img
                   src={
-                    this.state.passport_photo ||
-                    "static/images/passportPhoto.png" ||
+                    //this.state.passport_photo ||
+                    //"static/images/passportPhoto.png" ||
                     c.url
+                    //"gs://menlyn-home-care-agency.appspot.com/passport-photos/01pbsnybzsq6"
                   }
-                  alt="Uploaded Images"
+                  alt=""
                   height="60"
                   width="60"
                 />
@@ -453,15 +495,7 @@ class HouseMaidList extends Component {
                 <Grid container spacing={2}>
                   <Grid item xs={8} sm={8} />
                   <Grid item xs={4} sm={4}>
-                    <img
-                      src={
-                        this.state.passport_photo ||
-                        "static/images/passportPhoto.png"
-                      }
-                      alt="Uploaded Images"
-                      height="120"
-                      width="120"
-                    />
+                    <img src={this.state.url} alt="" height="120" width="120" />
                   </Grid>
                 </Grid>
                 <Typography
