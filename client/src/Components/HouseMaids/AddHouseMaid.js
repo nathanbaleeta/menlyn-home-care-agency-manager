@@ -66,8 +66,13 @@ class AddHouseMaid extends Component {
       .put(e.target.files[0]);
 
     uploadTask
-      .then(uploadTaskSnapshot => {
-        return uploadTaskSnapshot.ref.getDownloadURL();
+      .then(snapshot => {
+        // progress function ...
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        this.setState({ progress });
+        return snapshot.ref.getDownloadURL();
       })
       .then(url => {
         this.setState({ url: url });
@@ -156,8 +161,14 @@ class AddHouseMaid extends Component {
               <img
                 src={passport_photo || "static/images/passportPhoto.png"}
                 alt="Uploaded Images"
-                height="120"
-                width="120"
+                height="140"
+                width="140"
+              />
+
+              <progress
+                value={this.state.progress}
+                max="100"
+                className="progress"
               />
             </Grid>
           </Grid>

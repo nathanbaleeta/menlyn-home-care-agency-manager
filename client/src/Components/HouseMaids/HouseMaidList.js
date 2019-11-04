@@ -72,26 +72,7 @@ class HouseMaidList extends Component {
       let items = snapshot.val();
       let newState = [];
 
-      const storageRef = firebase.storage();
-
       for (let item in items) {
-        const fetchPhoto = (item, url) => {
-          //Find index of specific object using findIndex method.
-          //const objIndex = newState.findIndex(obj => obj.id === item);
-          //console.log(objIndex);
-
-          const storageRef = firebase.storage();
-          storageRef
-            .ref(url)
-            .getDownloadURL()
-            .then(function(photoURL) {
-              Object.assign(...newState, { url: photoURL });
-            })
-            .catch(function(error) {
-              // Do something
-            });
-        };
-
         newState.push({
           id: item,
           firstName: items[item].firstName,
