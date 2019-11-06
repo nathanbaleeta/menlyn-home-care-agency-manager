@@ -53,7 +53,8 @@ class HouseMaidList extends Component {
       village: "",
       lc1Name: "",
       lc1Contact: "",
-      url: ""
+      url: "",
+      progress: 0
     };
   }
 
@@ -127,8 +128,13 @@ class HouseMaidList extends Component {
       .put(e.target.files[0]);
 
     uploadTask
-      .then(uploadTaskSnapshot => {
-        return uploadTaskSnapshot.ref.getDownloadURL();
+      .then(snapshot => {
+        // progress function ...
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        this.setState({ progress });
+        return snapshot.ref.getDownloadURL();
       })
       .then(url => {
         this.setState({ url: url });
@@ -476,7 +482,17 @@ class HouseMaidList extends Component {
                 <Grid container spacing={2}>
                   <Grid item xs={8} sm={8} />
                   <Grid item xs={4} sm={4}>
-                    <img src={this.state.url} alt="" height="120" width="120" />
+                    <img
+                      src={this.state.url || "static/images/passportPhoto.png"}
+                      alt=""
+                      height="154"
+                      width="154"
+                    />
+                    <progress
+                      value={this.state.progress}
+                      max="100"
+                      className="progress"
+                    />
                   </Grid>
                 </Grid>
                 <Typography
