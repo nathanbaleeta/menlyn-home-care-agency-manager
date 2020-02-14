@@ -50,6 +50,7 @@ class CustomToolbar extends React.Component {
         </Tooltip>
 
         <Dialog
+          maxWidth="sm"
           id="myDialog"
           open={this.state.open}
           aria-labelledby="form-dialog-title"
@@ -63,7 +64,7 @@ class CustomToolbar extends React.Component {
             }}
           >
             <Typography
-              variant="h4"
+              variant="h5"
               align="center"
               gutterBottom
               style={{ color: "white" }}

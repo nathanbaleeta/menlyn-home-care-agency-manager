@@ -7,10 +7,11 @@ import Visualization from "../Analytics/Visualization";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    zoom: "74%"
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   }
@@ -18,8 +19,9 @@ const styles = theme => ({
 
 class Dashboard extends React.Component {
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <Visualization />
       </div>
     );

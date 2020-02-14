@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -22,7 +22,7 @@ const styles = theme => ({
   dialogPaper: {}
 });
 
-class CustomToolbarMaid extends React.Component {
+class CustomToolbarMaid extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +42,7 @@ class CustomToolbarMaid extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Tooltip title={"Add Loan"}>
           <IconButton className={classes.iconButton} onClick={this.handleOpen}>
             <PersonAddIcon color="primary" className={classes.addIcon} />
@@ -50,6 +50,7 @@ class CustomToolbarMaid extends React.Component {
         </Tooltip>
 
         <Dialog
+          maxWidth="sm"
           id="myDialog"
           open={this.state.open}
           aria-labelledby="form-dialog-title"
@@ -80,7 +81,7 @@ class CustomToolbarMaid extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

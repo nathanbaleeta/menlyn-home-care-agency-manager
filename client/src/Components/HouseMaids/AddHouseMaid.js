@@ -154,7 +154,12 @@ class AddHouseMaid extends Component {
     return (
       <Fragment>
         <br />
-        <form onSubmit={this.handleSubmit}>
+        <form
+          onSubmit={this.handleSubmit}
+          style={{
+            zoom: "70%"
+          }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={8} sm={8} />
             <Grid item xs={4} sm={4}>

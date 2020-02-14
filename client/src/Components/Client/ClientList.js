@@ -28,6 +28,10 @@ import { genders } from "../Common/genderList";
 import { maritalStatuses } from "../Common/maritalStatusList";
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zoom: "70%"
+  },
   // Overiding css properties on material ui textbox
   notchedOutline: {
     borderWidth: "1px",
@@ -252,299 +256,304 @@ class ClientList extends Component {
 
     return (
       <Fragment>
-        <MUIDataTable
-          title={"Client list"}
-          data={data.map(c => {
-            return [
-              <Link
-                //to={`/clients/${c.id}`}
-                style={{
-                  color: "darkblue",
-                  textDecoration: "none",
-                  fontSize: 18
-                }}
-              >
-                {c.lastName + " " + c.firstName}
-              </Link>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.title}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.gender}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.maritalStatus}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.address}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.phone1}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.phone2}
-              </div>,
-
-              <IconButton
-                color="primary"
-                //onClick={() => this.updateFarmer(index)}
-                // The bind method also works
-                onClick={this.updateClient.bind(this, c.id)}
-              >
-                <EditIcon color="primary" />
-              </IconButton>
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
-
-        <Dialog
-          maxWidth="sm"
-          open={this.state.open}
-          onClose={this.closeDialog}
-          aria-labelledby="form-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="simple-dialog-title"
-            color="default"
-            style={{ backgroundColor: "teal" }}
-          >
-            <Typography
-              variant="h4"
-              align="center"
-              gutterBottom
-              style={{ color: "white" }}
-            >
-              Edit Client
-            </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" color="primary">
-              <br />
-              <form onSubmit={this.handleSubmit}>
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  style={{ color: "black" }}
+        <div className={classes.root}>
+          <MUIDataTable
+            title={"Client list"}
+            data={data.map(c => {
+              return [
+                <Link
+                  //to={`/clients/${c.id}`}
+                  style={{
+                    color: "darkblue",
+                    textDecoration: "none",
+                    fontSize: 18
+                  }}
                 >
-                  Bio-data
-                </Typography>
+                  {c.lastName + " " + c.firstName}
+                </Link>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.title}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.gender}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.maritalStatus}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.address}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.phone1}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.phone2}
+                </div>,
 
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="firstName"
-                      name="firstName"
-                      value={this.state.firstName}
-                      onChange={this.onChange}
-                      label="First name"
-                      fullWidth
-                      margin="normal"
-                      //variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="lastName"
-                      name="lastName"
-                      value={this.state.lastName}
-                      onChange={this.onChange}
-                      label="Last name"
-                      fullWidth
-                      margin="normal"
-                      //variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      id="title"
-                      select
-                      name="title"
-                      value={this.state.title}
-                      onChange={this.onChange}
-                      label="Title*"
-                      fullWidth
-                      helperText="Please select title"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    >
-                      {titles.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <TextField
-                      id="gender"
-                      select
-                      name="gender"
-                      value={this.state.gender}
-                      onChange={this.onChange}
-                      label="Gender*"
-                      fullWidth
-                      helperText="Please select gender"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    >
-                      {genders.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      id="maritalStatus"
-                      select
-                      name="maritalStatus"
-                      value={this.state.maritalStatus}
-                      onChange={this.onChange}
-                      label="Marital Status*"
-                      fullWidth
-                      helperText="Please select marital status"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    >
-                      {maritalStatuses.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      id="address"
-                      name="address"
-                      value={this.state.address}
-                      onChange={this.onChange}
-                      label="Address"
-                      multiline
-                      rowsMax="4"
-                      fullWidth
-                      margin="normal"
-                      //variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <InputMask
-                      mask="256999999999"
-                      value={this.state.phone1}
-                      onChange={this.onChange}
-                    >
-                      {() => (
-                        <TextField
-                          id="phone1"
-                          name="phone1"
-                          label="Phone 1"
-                          fullWidth
-                          margin="normal"
-                          //variant="outlined"
-                          autoComplete="phone1"
-                          InputProps={{
-                            classes: {
-                              notchedOutline: classes.notchedOutline
-                            }
-                          }}
-                        />
-                      )}
-                    </InputMask>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <InputMask
-                      mask="256999999999"
-                      value={this.state.phone2}
-                      onChange={this.onChange}
-                    >
-                      {() => (
-                        <TextField
-                          id="phone2"
-                          name="phone2"
-                          label="Phone 2"
-                          fullWidth
-                          margin="normal"
-                          //variant="outlined"
-                          autoComplete="off"
-                          InputProps={{
-                            classes: {
-                              notchedOutline: classes.notchedOutline
-                            }
-                          }}
-                        />
-                      )}
-                    </InputMask>
-                  </Grid>
+                <IconButton
+                  color="primary"
+                  //onClick={() => this.updateFarmer(index)}
+                  // The bind method also works
+                  onClick={this.updateClient.bind(this, c.id)}
+                >
+                  <EditIcon color="primary" />
+                </IconButton>
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />
+          <Dialog
+            maxWidth="sm"
+            open={this.state.open}
+            onClose={this.closeDialog}
+            aria-labelledby="form-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle
+              id="simple-dialog-title"
+              color="default"
+              style={{ backgroundColor: "teal" }}
+            >
+              <Typography
+                variant="h5"
+                align="center"
+                gutterBottom
+                style={{ color: "white" }}
+              >
+                Edit Client
+              </Typography>
+            </DialogTitle>
+            <DialogContent
+              style={{
+                zoom: "70%"
+              }}
+            >
+              <DialogContentText id="alert-dialog-description" color="primary">
+                <br />
+                <form onSubmit={this.handleSubmit}>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    style={{ color: "black" }}
+                  >
+                    Bio-data
+                  </Typography>
 
-                  <Grid item xs={12} sm={12}>
-                    <br />
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="large"
-                      fullWidth
-                      color="primary"
-                    >
-                      Update Client
-                    </Button>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        id="firstName"
+                        name="firstName"
+                        value={this.state.firstName}
+                        onChange={this.onChange}
+                        label="First name"
+                        fullWidth
+                        margin="normal"
+                        //variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        id="lastName"
+                        name="lastName"
+                        value={this.state.lastName}
+                        onChange={this.onChange}
+                        label="Last name"
+                        fullWidth
+                        margin="normal"
+                        //variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
+                        id="title"
+                        select
+                        name="title"
+                        value={this.state.title}
+                        onChange={this.onChange}
+                        label="Title*"
+                        fullWidth
+                        helperText="Please select title"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      >
+                        {titles.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
+                        id="gender"
+                        select
+                        name="gender"
+                        value={this.state.gender}
+                        onChange={this.onChange}
+                        label="Gender*"
+                        fullWidth
+                        helperText="Please select gender"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      >
+                        {genders.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        id="maritalStatus"
+                        select
+                        name="maritalStatus"
+                        value={this.state.maritalStatus}
+                        onChange={this.onChange}
+                        label="Marital Status*"
+                        fullWidth
+                        helperText="Please select marital status"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      >
+                        {maritalStatuses.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        id="address"
+                        name="address"
+                        value={this.state.address}
+                        onChange={this.onChange}
+                        label="Address"
+                        multiline
+                        rowsMax="4"
+                        fullWidth
+                        margin="normal"
+                        //variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <InputMask
+                        mask="256999999999"
+                        value={this.state.phone1}
+                        onChange={this.onChange}
+                      >
+                        {() => (
+                          <TextField
+                            id="phone1"
+                            name="phone1"
+                            label="Phone 1"
+                            fullWidth
+                            margin="normal"
+                            //variant="outlined"
+                            autoComplete="phone1"
+                            InputProps={{
+                              classes: {
+                                notchedOutline: classes.notchedOutline
+                              }
+                            }}
+                          />
+                        )}
+                      </InputMask>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <InputMask
+                        mask="256999999999"
+                        value={this.state.phone2}
+                        onChange={this.onChange}
+                      >
+                        {() => (
+                          <TextField
+                            id="phone2"
+                            name="phone2"
+                            label="Phone 2"
+                            fullWidth
+                            margin="normal"
+                            //variant="outlined"
+                            autoComplete="off"
+                            InputProps={{
+                              classes: {
+                                notchedOutline: classes.notchedOutline
+                              }
+                            }}
+                          />
+                        )}
+                      </InputMask>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12}>
+                      <br />
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="small"
+                        fullWidth
+                        color="primary"
+                      >
+                        Update Client
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </form>
-              <br />
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
+                </form>
+                <br />
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+        </div>
       </Fragment>
     );
   }
